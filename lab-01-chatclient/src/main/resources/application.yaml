@@ -1,0 +1,10 @@
+spring:
+  application:
+    name:  lab-01-chatclient
+  ai:
+    openai:
+      chat:
+        options:
+          model: qwen-plus
+      api-key: sk-*****
+      base-url: https://dashscope.aliyuncs.com/compatible-mode
