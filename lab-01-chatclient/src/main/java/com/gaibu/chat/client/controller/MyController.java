@@ -1,22 +1,26 @@
 package com.gaibu.chat.client.controller;
 
+import cn.hutool.core.util.RandomUtil;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.openai.OpenAiChatOptions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class MyController {
 
-    private final ChatClient chatClient;
 
-    public MyController(ChatClient.Builder chatClientBuilder) {
-        this.chatClient = chatClientBuilder.build();
-    }
+    @Autowired
+    private ChatClient qwenPlusChatClient;
+    @Autowired
+    private ChatClient qwenMaxChatClient;
 
     @GetMapping("/ai")
     String generation(String userInput) {
-        return this.chatClient.prompt()
+
+        return RandomUtil.randomEle(List.of(qwenPlusChatClient, qwenMaxChatClient)).prompt()
                 .user(userInput)
                 .call()
                 .content();
